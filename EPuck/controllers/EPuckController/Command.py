@@ -5,8 +5,8 @@ class Command:
     def cancel(self):
         pass
 
-    def update(self):
+    def update(self, time):
         pass
 
-    def initialize(self):
+    def initialize(self, time):
         pass
