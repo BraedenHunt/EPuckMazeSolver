@@ -3,7 +3,7 @@ from Command import Command
 
 class FaceHeadingCommand(Command):
     kP = 0.2
-    max_speed_prop = 1
+    max_speed_prop = .25
     max_error = 0.05
 
     def __init__(self, drivetrain: Drivetrain, heading: float):
@@ -16,5 +16,5 @@ class FaceHeadingCommand(Command):
         #print("Rot: {}".format(rot))
         self.drivetrain.drive(-rot, rot)
 
-    def is_finished(self, time):
+    def is_finished(self):
         return abs(self.target_heading - self.drivetrain.get_heading()) < self.max_error

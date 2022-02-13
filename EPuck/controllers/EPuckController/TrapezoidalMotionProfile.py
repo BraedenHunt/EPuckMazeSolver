@@ -22,14 +22,18 @@ class TrapezoidalMotionProfile:
 
     def calculate(self, time):
         if time < self.endAccelTime:  # speeding up
+            print('{}: speeding up'.format(time))
             return self.initialState + self.maxAcceleration * time ** 2 / 2.0
 
         elif time < self.endFullSpeedTime:  # at max speed
+            print('{}: full speed'.format(time))
             return self.initialState + self.endAccelDist + self.maxVelocity * (time - self.endAccelTime)
 
         elif time < self.totalTime:  # decelerating
             decel_time = time - self.endFullSpeedTime
+            print('{}: slowing down'.format(time))
             return self.initialState + self.endAccelDist + self.fullSpeedDist + (
                         self.maxVelocity * decel_time - 0.5 * self.maxAcceleration * decel_time ** 2)
         else:  # over time limit so should be at target state
+            print('{}: over time'.format(time))
             return self.goalState

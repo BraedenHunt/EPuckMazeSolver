@@ -23,6 +23,9 @@ class Drivetrain:
         self.left_encoder.enable(self.timestep)
         self.right_encoder.enable(self.timestep)
 
+        self.left_encoder_offset = 0
+        self.right_encoder_offset = 0
+
 
         self.compass: Compass = robot.getDevice('compass')
         self.compass.enable(self.timestep)
@@ -45,8 +48,18 @@ class Drivetrain:
         return max(min(max_value, value), min_value)
 
     def get_wheel_poses(self):
-        return [self.convert_rad_to_distance(self.left_encoder.getValue()),
-                self.convert_rad_to_distance(self.right_encoder.getValue())]
+        return [self.getLeftDistance(),
+                self.getRightDistance()]
 
     def convert_rad_to_distance(self, radians):
-        return radians / (2 * math.pi) * self.WHEEL_DIAMETER * 2
+        return radians * self.WHEEL_DIAMETER / 2.0
+
+    def zero_encoders(self):
+        self.left_encoder_offset += self.getLeftDistance()
+        self.right_encoder_offset += self.getRightDistance()
+
+    def getLeftDistance(self):
+        return self.convert_rad_to_distance(self.left_encoder.getValue()) - self.left_encoder_offset
+
+    def getRightDistance(self):
+        return self.convert_rad_to_distance(self.right_encoder.getValue()) - self.right_encoder_offset
