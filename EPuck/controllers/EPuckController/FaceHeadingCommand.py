@@ -2,9 +2,9 @@ from Drivetrain import Drivetrain
 from Command import Command
 
 class FaceHeadingCommand(Command):
-    kP = 0.2
-    max_speed_prop = .25
-    max_error = 0.05
+    kP = 0.05
+    max_speed_prop = .5
+    max_error = 0.075
 
     def __init__(self, drivetrain: Drivetrain, heading: float):
         self.drivetrain = drivetrain

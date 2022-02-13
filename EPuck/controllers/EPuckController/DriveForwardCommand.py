@@ -6,9 +6,9 @@ class DriveForwardCommand(Command):
     MAZE_GRID = 0.12 # meters
     kP = 200
     max_speed_prop = 1
-    max_error = 0.001
+    max_error = 0.005
 
-    def __init__(self, drivetrain: Drivetrain, spaces: int = 1):
+    def __init__(self, drivetrain: Drivetrain, spaces = 1):
         self.drivetrain = drivetrain
         self.spaces = spaces
         self.currentPoses = [0,0]

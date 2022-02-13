@@ -3,7 +3,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.0944
-  position -0.06090557655332762 -0.6503655846865001 1.1135165162079868
+  position -0.06090296996588324 -0.6503629780916849 2.035343941676624
 }
 TexturedBackground {
 }
@@ -427,13 +427,13 @@ Solid {
   }
 }
 Robot {
-  translation -0.0599934 -0.65 -6.25431e-05
+  translation -0.0599934 -0.6 -6.25431e-05
   rotation 7.093715617797785e-05 -7.098249715994032e-05 0.9999999949647025 1.5701349945839427
   children [
     Compass {
     }
     TouchSensor {
-      translation 0.045 0 0.01
+      translation 0.045 0 0.015
       boundingObject Box {
         size 0.01 0.02 0.01
       }
@@ -610,7 +610,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0 -0.02600000000000015 0.02
+        translation 0 -0.02600000000000054 0.02
         rotation 0 1 0 0.8733038536017035
         children [
           Transform {
