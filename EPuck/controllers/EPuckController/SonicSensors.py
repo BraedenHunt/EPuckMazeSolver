@@ -22,14 +22,15 @@ class SonicSensors:
         self.printGrid(self.get_grid())
 
     def get_grid(self):
-        return [self.is_wall(self.sensors[0]) or self.is_wall(self.sensors[7]), # Front
-                self.is_wall(self.sensors[5]), # Right
-                self.is_wall(self.sensors[3]) or self.is_wall(self.sensors[4]), # Back
-                self.is_wall(self.sensors[2])] # Left
+        return [self.is_wall(self.sensors[0]) or self.is_wall(self.sensors[7]), # Front 0
+                self.is_wall(self.sensors[5]), # Right 1
+                self.is_wall(self.sensors[3]) or self.is_wall(self.sensors[4]), # Back 2
+                self.is_wall(self.sensors[2])] # Left 3
 
     @classmethod
     def is_wall(cls, sensor):
         return sensor.getValue() > cls.DISTANCE_THRESHOLD
+
 
     @classmethod
     def printGrid(cls, grid):

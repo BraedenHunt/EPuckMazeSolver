@@ -37,7 +37,7 @@ testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, 
 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
 commands = shortPath
-runCommands = True
+runCommands = False
 index = 0
 max_index = 10
 commands[index].initialize(robot.getTime())
@@ -55,6 +55,6 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
             print("TOUCHED!")
             break
     #sonicSensors.printSensorValues()
-    print(mapper.get_grid_pos(drivetrain.odometry.getPose()))
+    print(sonicSensors.printGrid(mapper.translateSensors(drivetrain.get_heading(), sonicSensors.get_grid())))
 
 
