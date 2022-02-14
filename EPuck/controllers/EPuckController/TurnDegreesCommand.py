@@ -7,8 +7,8 @@ class TurnDegressCommand(Command):
     kD = 0.06
     max_speed_prop = 1
     max_error = 0.075
-    maxOmega = 10
-    maxAlpha = 10
+    maxOmega = 120
+    maxAlpha = 450
 
     def __init__(self, drivetrain: Drivetrain, angle: float):
         self.drivetrain = drivetrain
@@ -23,8 +23,8 @@ class TurnDegressCommand(Command):
         self.error = (self.profile.calculate(delta_time) - (self.getCurrentAngle()))
         rot = Drivetrain.bound(self.error * self.kP + self.kD * (self.prevError - self.error), -self.max_speed_prop, self.max_speed_prop)
         self.prevError = self.error
-        print("Current Angle: {}".format(self.getCurrentAngle()))
-        print("Target Angle: {}".format(self.profile.calculate(delta_time)))
+        #print("Current Angle: {}".format(self.getCurrentAngle()))
+        #print("Target Angle: {}".format(self.profile.calculate(delta_time)))
         self.drivetrain.drive(-rot, rot)
         self.drivetrain.update()
         #print("error: {}".format(self.error))

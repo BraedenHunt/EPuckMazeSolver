@@ -6,7 +6,7 @@ from DriveForwardCommand import DriveForwardCommand
 from SonicSensors import SonicSensors
 
 MAX_SPEED = 6.28
-MAX_ACCELERATION = 4
+MAX_ACCELERATION = 200
 TIMESTEP = 64
 
 # create the Robot instance.
@@ -30,12 +30,14 @@ widePath = [DriveForwardCommand(drivetrain, 2.5), FaceHeadingCommand(drivetrain,
             FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 8), FaceHeadingCommand(drivetrain, -90),
             DriveForwardCommand(drivetrain, 2)]
 
-shortPath = [DriveForwardCommand(drivetrain, 7.5), FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2),
-            FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 3), FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2)]
+shortPath = [DriveForwardCommand(drivetrain, 7.5), TurnDegressCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2),
+            TurnDegressCommand(drivetrain, -90), DriveForwardCommand(drivetrain, 3), TurnDegressCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2)]
 
 testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90), TurnDegressCommand(drivetrain, 180)]
-commands = testTurns
-runCommands = False
+
+testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
+commands = shortPath
+runCommands = True
 index = 0
 max_index = 10
 commands[index].initialize(robot.getTime())

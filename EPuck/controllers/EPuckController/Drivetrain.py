@@ -48,7 +48,7 @@ class Drivetrain:
         self.left_motor.setVelocity(self.bound(self.leftPower, -1, 1) * self.MAX_SPEED)
         self.right_motor.setVelocity(self.bound(self.rightPower, -1, 1) * self.MAX_SPEED)
         self.odometry.update(self.getLeftDistance(), self.getRightDistance(), self.get_heading())
-        #print(self.odometry.getPose())
+        print(self.odometry.getPose())
 
     def get_raw_heading(self):
         values = self.compass.getValues()
