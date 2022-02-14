@@ -15,6 +15,7 @@ class FaceHeadingCommand(Command):
         rot = Drivetrain.bound(error * self.kP, -self.max_speed_prop, self.max_speed_prop)
         #print("Rot: {}".format(rot))
         self.drivetrain.drive(-rot, rot)
+        self.drivetrain.update()
 
     def is_finished(self):
         return abs(self.target_heading - self.drivetrain.get_heading()) < self.max_error

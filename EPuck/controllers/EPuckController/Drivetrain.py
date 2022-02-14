@@ -2,13 +2,16 @@ import math
 from math import atan2
 
 from controller import Robot, Motor, Compass, PositionSensor
+from Odometry import Odometry
 
 class Drivetrain:
-    WHEEL_DIAMETER = 0.041 # meters (41mm)
+    WHEEL_DIAMETER = 0.041 * 0.97947900595 # meters (~41mm)
 
-    def __init__(self, robot: Robot, max_speed, max_accel):
+    def __init__(self, robot: Robot, max_speed, max_accel, timestep = 64):
+        self.leftPower = 0
+        self.rightPower = 0
         self.robot = robot
-        self.timestep = int(robot.getBasicTimeStep())
+        self.timestep = timestep
         self.MAX_SPEED = max_speed
         self.MAX_ACCELERATION = max_accel
         self.right_motor: Motor = robot.getDevice('right wheel motor')
@@ -26,13 +29,21 @@ class Drivetrain:
         self.left_encoder_offset = 0
         self.right_encoder_offset = 0
 
+        self.odometry = Odometry([-0.06, -0.6])
+
 
         self.compass: Compass = robot.getDevice('compass')
         self.compass.enable(self.timestep)
 
     def drive(self, left: float, right: float):
-        self.left_motor.setVelocity(self.bound(left, -1, 1) * self.MAX_SPEED)
-        self.right_motor.setVelocity(self.bound(right, -1, 1) * self.MAX_SPEED)
+        self.leftPower = left
+        self.rightPower = right
+
+    def update(self):
+        self.left_motor.setVelocity(self.bound(self.leftPower, -1, 1) * self.MAX_SPEED)
+        self.right_motor.setVelocity(self.bound(self.rightPower, -1, 1) * self.MAX_SPEED)
+        self.odometry.update(self.getLeftDistance(), self.getRightDistance(), self.get_heading())
+        print(self.odometry.getPose())
 
     def get_heading(self):
         values = self.compass.getValues()
@@ -57,6 +68,7 @@ class Drivetrain:
     def zero_encoders(self):
         self.left_encoder_offset += self.getLeftDistance()
         self.right_encoder_offset += self.getRightDistance()
+        self.odometry = Odometry(self.odometry.getPose())
 
     def getLeftDistance(self):
         return self.convert_rad_to_distance(self.left_encoder.getValue()) - self.left_encoder_offset
