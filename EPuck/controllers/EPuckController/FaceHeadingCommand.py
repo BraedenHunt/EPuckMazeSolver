@@ -3,7 +3,7 @@ from Command import Command
 
 class FaceHeadingCommand(Command):
     kP = 0.05
-    max_speed_prop = .5
+    max_speed_prop = .50
     max_error = 0.075
 
     def __init__(self, drivetrain: Drivetrain, heading: float):

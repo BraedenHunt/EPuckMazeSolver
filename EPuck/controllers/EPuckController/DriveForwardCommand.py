@@ -4,7 +4,7 @@ from TrapezoidalMotionProfile import TrapezoidalMotionProfile
 
 class DriveForwardCommand(Command):
     MAZE_GRID = 0.12 # meters
-    kP = 200
+    kP = 50
     max_speed_prop = 1
     max_error = 0.005
 

@@ -5,7 +5,7 @@ from DriveForwardCommand import DriveForwardCommand
 from SonicSensors import SonicSensors
 
 MAX_SPEED = 6.28
-MAX_ACCELERATION = 1
+MAX_ACCELERATION = 4
 TIMESTEP = 64
 
 # create the Robot instance.

@@ -2,10 +2,9 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.5781289568544749 0.6279059649639291 0.5210575864614908 2.111629133537857
+  orientation -0.5779315579975363 0.6276915720479765 0.5215346629424358 2.110844385046864
   position -0.24300827108532058 0.7309966660995633 3.8816654645141067
   follow "e-puck"
-  followType "None"
 }
 TexturedBackground {
 }
@@ -435,7 +434,7 @@ Robot {
     Compass {
     }
     TouchSensor {
-      translation 0.045 0 0.015
+      translation 0.04 0 0.015
       boundingObject Box {
         size 0.01 0.02 0.01
       }
@@ -459,7 +458,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation 0 0.025999999999999666 0.02
+        translation 0 0.02600000000000029 0.02
         rotation 0 1 0 5.3123777252627065
         children [
           DEF EPUCK_WHEEL Transform {
@@ -612,7 +611,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0 -0.02600000000000072 0.02
+        translation 0 -0.026000000000000748 0.02
         rotation 0 -1 0 2.4467905854135528
         children [
           Transform {
