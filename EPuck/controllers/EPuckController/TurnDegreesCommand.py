@@ -23,7 +23,7 @@ class TurnDegressCommand(Command):
         self.error = (self.profile.calculate(delta_time) - (self.getCurrentAngle()))
         rot = Drivetrain.bound(self.error * self.kP + self.kD * (self.prevError - self.error), -self.max_speed_prop, self.max_speed_prop)
         self.prevError = self.error
-        #print("Current Angle: {}".format(self.getCurrentAngle()))
+        print("Current Angle: {}".format(self.getCurrentAngle()))
         print("Target Angle: {}".format(self.profile.calculate(delta_time)))
         self.drivetrain.drive(-rot, rot)
         self.drivetrain.update()
@@ -35,9 +35,11 @@ class TurnDegressCommand(Command):
         self.profile = TrapezoidalMotionProfile(self.getCurrentAngle(), self.target_heading, self.maxOmega, self.maxAlpha)
 
     def getCurrentAngle(self):
-        bearing = (self.drivetrain.getGryoAngle() + self.angleOffset) % 360
+        bearing = (self.drivetrain.getGryoAngle() + self.angleOffset)
         if bearing > 180:
             bearing = bearing - 360.0
+        elif bearing < -180:
+            bearing += 360.0
         return bearing
 
     def is_finished(self):

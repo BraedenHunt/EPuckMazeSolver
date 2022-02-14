@@ -20,6 +20,9 @@ class Drivetrain:
         self.left_motor.setPosition(float('inf'))
         self.right_motor.setPosition(float('inf'))
 
+        self.left_motor.setVelocity(0)
+        self.right_motor.setVelocity(0)
+
         self.left_encoder: PositionSensor = robot.getDevice('left wheel sensor')
         self.right_encoder: PositionSensor = robot.getDevice('right wheel sensor')
 

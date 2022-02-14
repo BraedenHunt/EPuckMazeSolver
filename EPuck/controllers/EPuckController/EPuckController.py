@@ -20,7 +20,7 @@ touchSensor.enable(TIMESTEP)
 # set up the motor speeds at 10% of the MAX_SPEED.
 drivetrain = Drivetrain(robot, MAX_SPEED, MAX_ACCELERATION)
 sonicSensors = SonicSensors(robot)
-drivetrain.drive(.0, 0.0)
+drivetrain.drive(0.0, 0.0)
 
 #currentCommand = FaceHeadingCommand(drivetrain, 90)
 currentCommand = DriveForwardCommand(drivetrain, 6)
@@ -35,7 +35,7 @@ shortPath = [DriveForwardCommand(drivetrain, 7.5), FaceHeadingCommand(drivetrain
 
 testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90), TurnDegressCommand(drivetrain, 180)]
 commands = testTurns
-runCommands = True
+runCommands = False
 index = 0
 max_index = 10
 commands[index].initialize(robot.getTime())
@@ -46,11 +46,13 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
         else:
             print("Ended Command")
             index += 1
-            commands[index].initialize(robot.getTime())
+            if index < len(commands):
+                commands[index].initialize(robot.getTime())
 
         if touchSensor.getValue() > 0:
             print("TOUCHED!")
             break
     #sonicSensors.printSensorValues()
+    print(drivetrain.getGryoAngle())
 
 
