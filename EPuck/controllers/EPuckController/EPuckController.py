@@ -1,6 +1,7 @@
 from controller import Robot, Motor, TouchSensor
 from Drivetrain import Drivetrain
 from FaceHeadingCommand import FaceHeadingCommand
+from TurnDegreesCommand import TurnDegressCommand
 from DriveForwardCommand import DriveForwardCommand
 from SonicSensors import SonicSensors
 
@@ -32,7 +33,8 @@ widePath = [DriveForwardCommand(drivetrain, 2.5), FaceHeadingCommand(drivetrain,
 shortPath = [DriveForwardCommand(drivetrain, 7.5), FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2),
             FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 3), FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2)]
 
-commands = shortPath
+testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90), TurnDegressCommand(drivetrain, 180)]
+commands = testTurns
 runCommands = True
 index = 0
 max_index = 10

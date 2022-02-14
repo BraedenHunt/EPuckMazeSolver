@@ -35,6 +35,8 @@ class Drivetrain:
         self.compass: Compass = robot.getDevice('compass')
         self.compass.enable(self.timestep)
 
+        self.gryoOffset = 0
+
     def drive(self, left: float, right: float):
         self.leftPower = left
         self.rightPower = right
@@ -43,16 +45,27 @@ class Drivetrain:
         self.left_motor.setVelocity(self.bound(self.leftPower, -1, 1) * self.MAX_SPEED)
         self.right_motor.setVelocity(self.bound(self.rightPower, -1, 1) * self.MAX_SPEED)
         self.odometry.update(self.getLeftDistance(), self.getRightDistance(), self.get_heading())
-        print(self.odometry.getPose())
+        #print(self.odometry.getPose())
 
-    def get_heading(self):
+    def get_raw_heading(self):
         values = self.compass.getValues()
         #print(values)
         rad = atan2(values[0], values[1])
-        bearing = ((rad - 1.5708) / math.pi * 180.0) % 360
+        bearing = ((rad - 1.5708) / math.pi * 180.0)
+        return bearing
+
+    def get_heading(self):
+        bearing = self.get_raw_heading() % 360
         if bearing > 180:
             bearing = bearing - 360.0
         return bearing
+
+    def getGryoAngle(self):
+        bearing = self.get_raw_heading() - self.gryoOffset
+        return bearing
+
+    def resetGyro(self):
+        self.gryoOffset += self.getGryoAngle()
 
     @classmethod
     def bound(cls, value: float, min_value: float, max_value: float):

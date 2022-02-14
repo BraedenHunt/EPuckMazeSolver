@@ -2,9 +2,10 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.5779315579975363 0.6276915720479765 0.5215346629424358 2.110844385046864
-  position -0.24300827108532058 0.7309966660995633 3.8816654645141067
+  orientation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.0944
+  position -0.06085426411361827 -0.6003776434317102 1.452117105892659
   follow "e-puck"
+  followType "Mounted Shot"
 }
 TexturedBackground {
 }
@@ -458,7 +459,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation 0 0.02600000000000029 0.02
+        translation 0 0.02600000000000043 0.02
         rotation 0 1 0 5.3123777252627065
         children [
           DEF EPUCK_WHEEL Transform {
