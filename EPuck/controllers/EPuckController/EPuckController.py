@@ -4,6 +4,7 @@ from FaceHeadingCommand import FaceHeadingCommand
 from TurnDegreesCommand import TurnDegressCommand
 from DriveForwardCommand import DriveForwardCommand
 from SonicSensors import SonicSensors
+from Mapper import Mapper
 
 MAX_SPEED = 6.28
 MAX_ACCELERATION = 200
@@ -22,8 +23,7 @@ drivetrain = Drivetrain(robot, MAX_SPEED, MAX_ACCELERATION)
 sonicSensors = SonicSensors(robot)
 drivetrain.drive(0.0, 0.0)
 
-#currentCommand = FaceHeadingCommand(drivetrain, 90)
-currentCommand = DriveForwardCommand(drivetrain, 6)
+mapper = Mapper(12, 12, .12)
 
 robot.step(TIMESTEP)
 widePath = [DriveForwardCommand(drivetrain, 2.5), FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 5),
@@ -55,6 +55,6 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
             print("TOUCHED!")
             break
     #sonicSensors.printSensorValues()
-    print(drivetrain.getGryoAngle())
+    print(mapper.get_grid_pos(drivetrain.odometry.getPose()))
 
 

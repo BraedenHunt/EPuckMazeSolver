@@ -25,8 +25,8 @@ class DriveForwardCommand(Command):
         self.drivetrain.drive(left_adj, right_adj)
         self.drivetrain.update()
 
-        print("Target = {}".format(self.left_trap_profile.calculate(100)))
-        print((self.drivetrain.getLeftDistance() + self.drivetrain.getRightDistance())/ 2.0)
+        #print("Target = {}".format(self.left_trap_profile.calculate(100)))
+        #print((self.drivetrain.getLeftDistance() + self.drivetrain.getRightDistance())/ 2.0)
 
     def initialize(self, time):
         self.initial_time = time
