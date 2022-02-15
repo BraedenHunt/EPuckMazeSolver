@@ -13,13 +13,17 @@ class Mapper:
         self.rows = rows
         self.columns = columns
         self.grid_spacing = grid_spacing
-
-        self.map = [['?'] * columns] * rows
+        self.generateMap()
 
     def get_grid_pos(self, pose):
-        x = round((self.rows / 2) - 1 - (-pose[0] - self.grid_spacing/2.0) / self.grid_spacing)
-        y = round((self.columns / 2) - 1 - (pose[1] - self.grid_spacing/2.0) / self.grid_spacing)
-        return [x,y]
+        x = round((self.rows / 2) - (-pose[0] - self.grid_spacing/2.0) / self.grid_spacing)
+        y = round((self.columns / 2) - (pose[1] - self.grid_spacing/2.0) / self.grid_spacing)
+        return [x, y]
+
+    def generateMap(self):
+        self.map = [[char for char in ('#' + '?' * self.columns + '#')] for _ in range(0, self.rows + 2)]
+        self.map[0] = ['#'] * (self.columns + 2)
+        self.map[-1] = ['#'] * (self.columns + 2)
 
     def translateSensors(self, heading, sensorValues):
         if -1 <= heading and heading <= 1: # Facing North
@@ -30,6 +34,30 @@ class Mapper:
         elif -89 >= heading and heading >= -91: # Facing East
                     # North         # West          # South          # East
             return [sensorValues[1], sensorValues[2], sensorValues[3], sensorValues[0]]
-        elif -179 <= heading or heading >= 179 : # Facing South
+        elif -179 <= heading or heading >= 179: # Facing South
                     # North         # West          # South          # East
             return [sensorValues[2], sensorValues[3], sensorValues[0], sensorValues[1]]
+        else:
+            return [False] * 4
+    def updateGridWalls(self, pose, heading, sensors):
+        translatedSensors = self.translateSensors(heading, sensors)
+        gridPose = self.get_grid_pos(pose)
+        returnVal = False
+        if translatedSensors[0]: # North
+            returnVal = returnVal or self.setWall(gridPose[0], gridPose[1] - 1, True)
+        if translatedSensors[1]: # West
+            returnVal = returnVal or self.setWall(gridPose[0]-1, gridPose[1], True)
+        if translatedSensors[2]: # South
+            returnVal = returnVal or self.setWall(gridPose[0], gridPose[1] + 1, True)
+        if translatedSensors[1]: # East
+            returnVal = returnVal or self.setWall(gridPose[0]+1, gridPose[1], True)
+        returnVal = returnVal or self.setWall(gridPose[0], gridPose[1], False)
+        return returnVal
+
+    def setWall(self, x, y, wall):
+        #print("setting {} @ {}, {}".format('#' if wall else '+', x, y))
+        #print("row len: {} col len: {}".format(len(self.map), len(self.map[y])))
+        if self.map[y][x] == '?':
+            self.map[y][x] = '#' if wall else '+'
+            return True
+        return False
