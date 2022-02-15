@@ -1,4 +1,6 @@
 class Command:
+    initialized = False
+
     def is_finished(self):
         return False
 
@@ -9,4 +11,5 @@ class Command:
         pass
 
     def initialize(self, time):
+        self.initialized = True
         pass

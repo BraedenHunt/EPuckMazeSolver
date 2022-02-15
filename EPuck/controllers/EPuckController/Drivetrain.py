@@ -32,8 +32,7 @@ class Drivetrain:
         self.left_encoder_offset = 0
         self.right_encoder_offset = 0
 
-        self.odometry = Odometry([-0.06, -0.6])
-
+        self.odometry = Odometry([-0.06, -0.24])
 
         self.compass: Compass = robot.getDevice('compass')
         self.compass.enable(self.timestep)

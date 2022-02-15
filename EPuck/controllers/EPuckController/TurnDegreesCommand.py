@@ -31,6 +31,7 @@ class TurnDegressCommand(Command):
 
     def initialize(self, time):
         self.initialTime = time
+        self.initialized = True
         self.drivetrain.resetGyro()
         self.profile = TrapezoidalMotionProfile(self.getCurrentAngle(), self.target_heading, self.maxOmega, self.maxAlpha)
 

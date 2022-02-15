@@ -64,12 +64,12 @@ class Mapper:
     def setWall(self, x, y, wall):
         #print("setting {} @ {}, {}".format('#' if wall else '+', x, y))
         #print("row len: {} col len: {}".format(len(self.map), len(self.map[y])))
-        if self.map[y][x] == '?':
+        if self.getPos(x, y) == '?':
             self.map[y][x] = '#' if wall else '+'
             return True
         return False
 
-    def prettyPrintMap(self):
+    def prettyPrintMap(self, pose=[-100,-100]):
         print("  ", end='')
         for i in range(len(self.map)):
             print("{} ".format(str(i).zfill(2)), end='')
@@ -77,6 +77,37 @@ class Mapper:
         for row in range(len(self.map)):
             print(str(row).zfill(2), end='')
             for point in range(len(self.map[row])):
-                print(" {} ".format(self.map[row][point]), end="")
+                if point == pose[0] and row == pose[1]:
+                    print(" * ", end="")
+                else:
+                    print(" {} ".format(self.map[row][point]), end="")
             print()
         print('-------------------------------')
+
+    def getPos(self, x, y):
+        return self.map[y][x]
+
+    def getPosFromPose(self, pose):
+        return self.map[pose[1]][pose[0]]
+
+    '''
+    returns a list of coordinates around the robot relative to the robot heading
+    '''
+    def getRobotRelativeAdjPoses(self, heading, pose):
+        '''
+        0 - F
+        1 - R
+        2 - B
+        3 - L
+        '''
+        x = pose[0]
+        y = pose[1]
+        if abs(heading) < self.max_heading_error:  # Facing North
+            return [[x, y-1], [x+1, y], [x, y+1], [x-1, y]]
+        elif abs(90 - heading) < self.max_heading_error:  # Facing West
+            return [[x-1, y], [x, y-1], [x+1, y], [x, y+1]]
+        elif abs(-90 - heading) < self.max_heading_error:  # Facing East
+            return [[x+1, y], [x, y+1], [x-1, y], [x, y-1]]
+        elif abs(180 - heading) < self.max_heading_error or abs(
+                -180 - heading) < self.max_heading_error:  # Facing South
+            return [[x, y + 1], [x - 1, y], [x, y - 1], [x + 1, y]]

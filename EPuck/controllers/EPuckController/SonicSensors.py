@@ -1,7 +1,7 @@
 from controller import Robot, DistanceSensor
 
 class SonicSensors:
-    DISTANCE_THRESHOLD = 90
+    DISTANCE_THRESHOLD = 100
 
     device_names = ['ps0', 'ps1','ps2','ps3','ps4','ps5','ps6','ps7']
     sensors = []

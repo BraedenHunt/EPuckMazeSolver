@@ -3,6 +3,7 @@ from Drivetrain import Drivetrain
 from FaceHeadingCommand import FaceHeadingCommand
 from TurnDegreesCommand import TurnDegressCommand
 from DriveForwardCommand import DriveForwardCommand
+from RHExploreCommand import RHExploreCommand
 from SonicSensors import SonicSensors
 from Mapper import Mapper
 
@@ -36,13 +37,17 @@ shortPath = [DriveForwardCommand(drivetrain, 7.5), TurnDegressCommand(drivetrain
 testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90), TurnDegressCommand(drivetrain, 180)]
 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
-commands = shortPath
+
+rhExplore = [DriveForwardCommand(drivetrain, 0.5), RHExploreCommand(drivetrain, mapper, sonicSensors)]
+commands = rhExplore
 runCommands = True
 index = 0
 max_index = 10
 commands[index].initialize(robot.getTime())
 while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_index:
     if runCommands:
+        if not commands[index].initialized:
+            commands[index].initialize(robot.getTime())
         if not commands[index].is_finished():
             commands[index].update(robot.getTime())
         else:
@@ -57,7 +62,7 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
         #print('Heading: {}'.format(drivetrain.get_heading()))
         #print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
         if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
-            mapper.prettyPrintMap()
+            mapper.prettyPrintMap(mapper.get_grid_pos(drivetrain.odometry.getPose()))
     #sonicSensors.printSensorValues()
 
 

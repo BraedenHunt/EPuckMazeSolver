@@ -30,6 +30,7 @@ class DriveForwardCommand(Command):
 
     def initialize(self, time):
         self.initial_time = time
+        self.initialized = True
         self.drivetrain.zero_encoders()
         self.set_target_poses()
         self.left_trap_profile = TrapezoidalMotionProfile(0, self.target_pos_left, self.drivetrain.MAX_SPEED, self.drivetrain.MAX_ACCELERATION)
