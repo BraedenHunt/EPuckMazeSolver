@@ -55,19 +55,9 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
             print("TOUCHED!")
             break
         #print('Heading: {}'.format(drivetrain.get_heading()))
-        print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
-        if type(commands[index]) == DriveForwardCommand:
-            if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
-                print("  ", end='')
-                for i in range(len(mapper.map)):
-                    print("{} ".format(str(i).zfill(2)), end='')
-                print()
-                for row in range(len(mapper.map)):
-                    print(str(row).zfill(2), end='')
-                    for point in range(len(mapper.map[row])):
-                        print(" {} ".format(mapper.map[row][point]), end="")
-                    print()
-                print('-------------------------------')
+        #print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
+        if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
+            mapper.prettyPrintMap()
     #sonicSensors.printSensorValues()
 
 

@@ -68,3 +68,15 @@ class Mapper:
             self.map[y][x] = '#' if wall else '+'
             return True
         return False
+
+    def prettyPrintMap(self):
+        print("  ", end='')
+        for i in range(len(self.map)):
+            print("{} ".format(str(i).zfill(2)), end='')
+        print()
+        for row in range(len(self.map)):
+            print(str(row).zfill(2), end='')
+            for point in range(len(self.map[row])):
+                print(" {} ".format(self.map[row][point]), end="")
+            print()
+        print('-------------------------------')
