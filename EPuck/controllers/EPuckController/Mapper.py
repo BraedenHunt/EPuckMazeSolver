@@ -14,6 +14,7 @@ class Mapper:
         self.columns = columns
         self.grid_spacing = grid_spacing
         self.generateMap()
+        self.max_heading_error = 1
 
     def get_grid_pos(self, pose):
         x = round((self.rows / 2) - (-pose[0] - self.grid_spacing/2.0) / self.grid_spacing)
@@ -25,18 +26,24 @@ class Mapper:
         self.map[0] = ['#'] * (self.columns + 2)
         self.map[-1] = ['#'] * (self.columns + 2)
 
-    def translateSensors(self, heading, sensorValues):
-        if -1 <= heading and heading <= 1: # Facing North
+    def translateSensors(self, heading, sensorValues): #
+        '''
+        0 - F
+        1 - R
+        2 - B
+        3 - L
+        '''
+        if abs(heading) < self.max_heading_error: # Facing North
             return sensorValues # No need to translate
-        elif 89 <= heading and heading <= 91: # Facing West
+        elif abs(90-heading) < self.max_heading_error: # Facing West
                     # North         # West          # South          # East
             return [sensorValues[1], sensorValues[0], sensorValues[3], sensorValues[2]]
-        elif -89 >= heading and heading >= -91: # Facing East
+        elif abs(-90-heading) < self.max_heading_error: # Facing East
                     # North         # West          # South          # East
-            return [sensorValues[1], sensorValues[2], sensorValues[3], sensorValues[0]]
-        elif -179 <= heading or heading >= 179: # Facing South
+            return [sensorValues[3], sensorValues[2], sensorValues[1], sensorValues[0]]
+        elif abs(180-heading) < self.max_heading_error or abs(-180-heading) < self.max_heading_error: # Facing South
                     # North         # West          # South          # East
-            return [sensorValues[2], sensorValues[3], sensorValues[0], sensorValues[1]]
+            return [sensorValues[2], sensorValues[1], sensorValues[0], sensorValues[3]]
         else:
             return [False] * 4
     def updateGridWalls(self, pose, heading, sensors):
@@ -45,7 +52,7 @@ class Mapper:
         returnVal = False
         if translatedSensors[0]: # North
             returnVal = returnVal or self.setWall(gridPose[0], gridPose[1] - 1, True)
-        if translatedSensors[1]: # West
+        if translatedSensors[3]: # West
             returnVal = returnVal or self.setWall(gridPose[0]-1, gridPose[1], True)
         if translatedSensors[2]: # South
             returnVal = returnVal or self.setWall(gridPose[0], gridPose[1] + 1, True)

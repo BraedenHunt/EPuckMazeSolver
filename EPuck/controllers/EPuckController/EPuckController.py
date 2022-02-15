@@ -1,4 +1,4 @@
-from controller import Robot, Motor, TouchSensor
+from controller import Robot, Motor, TouchSensor, DistanceSensor
 from Drivetrain import Drivetrain
 from FaceHeadingCommand import FaceHeadingCommand
 from TurnDegreesCommand import TurnDegressCommand
@@ -54,12 +54,20 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
         if touchSensor.getValue() > 0:
             print("TOUCHED!")
             break
+        #print('Heading: {}'.format(drivetrain.get_heading()))
+        print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
+        if type(commands[index]) == DriveForwardCommand:
+            if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
+                print("  ", end='')
+                for i in range(len(mapper.map)):
+                    print("{} ".format(str(i).zfill(2)), end='')
+                print()
+                for row in range(len(mapper.map)):
+                    print(str(row).zfill(2), end='')
+                    for point in range(len(mapper.map[row])):
+                        print(" {} ".format(mapper.map[row][point]), end="")
+                    print()
+                print('-------------------------------')
     #sonicSensors.printSensorValues()
-    if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
-        for row in mapper.map:
-            for point in row:
-                print(point, end="")
-            print()
-        print('-------------------------------')
 
 

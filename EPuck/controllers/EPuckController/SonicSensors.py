@@ -1,7 +1,7 @@
 from controller import Robot, DistanceSensor
 
 class SonicSensors:
-    DISTANCE_THRESHOLD = 100
+    DISTANCE_THRESHOLD = 90
 
     device_names = ['ps0', 'ps1','ps2','ps3','ps4','ps5','ps6','ps7']
     sensors = []
@@ -23,9 +23,9 @@ class SonicSensors:
 
     def get_grid(self):
         return [self.is_wall(self.sensors[0]) and self.is_wall(self.sensors[7]), # Front 0
-                self.is_wall(self.sensors[5]), # Right 1
+                self.is_wall(self.sensors[2]), # Right 1
                 False, #self.is_wall(self.sensors[3]) or self.is_wall(self.sensors[4]), # Back 2
-                self.is_wall(self.sensors[2])] # Left 3
+                self.is_wall(self.sensors[5])] # Left 3
 
     @classmethod
     def is_wall(cls, sensor):

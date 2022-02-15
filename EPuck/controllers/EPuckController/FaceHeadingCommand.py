@@ -2,7 +2,7 @@ from Drivetrain import Drivetrain
 from Command import Command
 
 class FaceHeadingCommand(Command):
-    kP = 0.05
+    kP = 0.1
     max_speed_prop = .50
     max_error = 0.075
 
