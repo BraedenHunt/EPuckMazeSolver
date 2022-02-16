@@ -35,9 +35,11 @@ class RHExploreCommand(Command):
                 robotPose = self.drivetrain.odometry.getPose()
                 gridPose = self.mapper.get_grid_pos(robotPose)
                 adjCoords = self.mapper.getRobotRelativeAdjPoses(self.drivetrain.get_heading(), gridPose)
-                rightCoords = adjCoords[1]
-                forwardCoords = adjCoords[0]
-                if self.mapper.getPosFromPose(rightCoords) != "?":# or self.mapper.getPosFromPose(rightCoords) == "+":
+                rightSpace = self.mapper.getPosFromPose(adjCoords[1])
+                forwardSpace = self.mapper.getPosFromPose(adjCoords[0])
+                leftSpace = self.mapper.getPosFromPose(adjCoords[3])
+
+                '''if self.mapper.getPosFromPose(rightCoords) != "?":# or self.mapper.getPosFromPose(rightCoords) == "+":
                     if self.mapper.getPosFromPose(forwardCoords) != "#":
                         self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
                         print("Driving Forward")
@@ -50,6 +52,26 @@ class RHExploreCommand(Command):
                     # turn right to the next cardinal direction.
                     self.currentCommand = FaceHeadingCommand(self.drivetrain,
                                                              90 * round((self.drivetrain.get_heading() - 90) / 90))
+                '''
+                if rightSpace == '?':
+                    print("Turning right: {} heading".format(90 * round((self.drivetrain.get_heading() - 90) / 90)))
+                    # turn right to the next cardinal direction.
+                    self.currentCommand = FaceHeadingCommand(self.drivetrain,
+                                                             90 * round((self.drivetrain.get_heading() - 90) / 90))
+                else:
+                    if forwardSpace == '#':
+                        if rightSpace == '+':
+                            # turn right to the next cardinal direction.
+                            self.currentCommand = FaceHeadingCommand(self.drivetrain,
+                                                                     90 * round(
+                                                                         (self.drivetrain.get_heading() - 90) / 90))
+                        else:
+                            print("Turning left")
+                            self.currentCommand = FaceHeadingCommand(self.drivetrain,
+                                                                     90 * round((self.drivetrain.get_heading() + 90) / 90))
+                    else:
+                        self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
+                        print("Driving Forward")
 
         if not self.currentCommand.initialized:
             self.currentCommand.initialize(time)
