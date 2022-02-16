@@ -40,6 +40,7 @@ testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
 
 lhExplore = [DriveForwardCommand(drivetrain, 0.5), LHExploreCommand(drivetrain, mapper, sonicSensors)]
+rhExplore = [DriveForwardCommand(drivetrain, 0.5), RHExploreCommand(drivetrain, mapper, sonicSensors)]
 commands = lhExplore
 runCommands = True
 index = 0

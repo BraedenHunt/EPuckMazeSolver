@@ -39,39 +39,37 @@ class RHExploreCommand(Command):
                 forwardSpace = self.mapper.getPosFromPose(adjCoords[0])
                 leftSpace = self.mapper.getPosFromPose(adjCoords[3])
 
-                '''if self.mapper.getPosFromPose(rightCoords) != "?":# or self.mapper.getPosFromPose(rightCoords) == "+":
-                    if self.mapper.getPosFromPose(forwardCoords) != "#":
-                        self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
-                        print("Driving Forward")
-                    else:
-                        print("Turning left")
-                        self.currentCommand = FaceHeadingCommand(self.drivetrain,
-                                                                 90 * round((self.drivetrain.get_heading() + 90) / 90))
-                else:
-                    print("Turning right: {} heading".format(90 * round((self.drivetrain.get_heading() - 90) / 90)))
-                    # turn right to the next cardinal direction.
-                    self.currentCommand = FaceHeadingCommand(self.drivetrain,
-                                                             90 * round((self.drivetrain.get_heading() - 90) / 90))
-                '''
                 if rightSpace == '?':
                     print("Turning right: {} heading".format(90 * round((self.drivetrain.get_heading() - 90) / 90)))
-                    # turn right to the next cardinal direction.
+                    # turn left to the next cardinal direction.
                     self.currentCommand = FaceHeadingCommand(self.drivetrain,
                                                              90 * round((self.drivetrain.get_heading() - 90) / 90))
                 else:
                     if forwardSpace == '#':
                         if rightSpace == '+':
+                            # turn left to the next cardinal direction.
+                            self.currentCommand = FaceHeadingCommand(self.drivetrain,
+                                                                     90 * round(
+                                                                         (self.drivetrain.get_heading() - 90) / 90))
+                            self.commandQueue.put(DriveForwardCommand(self.drivetrain, 1))
+                        else:
+                            print("Turning left")
+                            self.currentCommand = FaceHeadingCommand(self.drivetrain,
+                                                                     90 * round((self.drivetrain.get_heading() + 90) / 90))
+                    elif forwardSpace == '+' and rightSpace == '+':
+                        self.currentCommand = FaceHeadingCommand(self.drivetrain,
+                                                                 90 * round(
+                                                                     (self.drivetrain.get_heading() - 90) / 90))
+                        self.commandQueue.put(DriveForwardCommand(self.drivetrain, 1))
+                    else:
+                        if rightSpace == '+' and forwardSpace != "?":
                             # turn right to the next cardinal direction.
                             self.currentCommand = FaceHeadingCommand(self.drivetrain,
                                                                      90 * round(
                                                                          (self.drivetrain.get_heading() - 90) / 90))
                         else:
-                            print("Turning left")
-                            self.currentCommand = FaceHeadingCommand(self.drivetrain,
-                                                                     90 * round((self.drivetrain.get_heading() + 90) / 90))
-                    else:
-                        self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
-                        print("Driving Forward")
+                            self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
+                            print("Driving Forward")
 
         if not self.currentCommand.initialized:
             self.currentCommand.initialize(time)
