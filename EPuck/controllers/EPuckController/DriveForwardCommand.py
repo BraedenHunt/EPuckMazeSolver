@@ -4,9 +4,9 @@ from TrapezoidalMotionProfile import TrapezoidalMotionProfile
 
 class DriveForwardCommand(Command):
     MAZE_GRID = 0.12 # meters
-    kP = 50
+    kP = 200
     max_speed_prop = 1
-    max_error = 0.005
+    max_error = 0.001
 
     def __init__(self, drivetrain: Drivetrain, spaces = 1):
         self.drivetrain = drivetrain

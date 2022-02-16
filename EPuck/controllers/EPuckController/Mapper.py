@@ -56,6 +56,11 @@ class Mapper:
         translatedSensors = self.translateSensors(heading, sensors)
         gridPose = self.get_grid_pos(pose)
         returnVal = False
+        x = pose[0] % .12 if pose[0] >= 0 else pose[0] % -.12
+        y = pose[1] % .12  if pose[1] >= 0 else pose[1] % -.12
+        min_offset = 0.02
+        if abs(x) < min_offset or abs(y) < min_offset:
+            return False
         if translatedSensors[0]: # North
             returnVal = returnVal or self.setWall(gridPose[0], gridPose[1] - 1, True)
         if translatedSensors[3]: # West

@@ -2,7 +2,7 @@
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.0944
+  orientation -0.5795151850541364 0.5759044787038323 0.5766248188385036 2.100889314948286
   position -0.06091097327070506 -0.2403194549630179 2.8937372381604662
   follow "e-puck"
   followType "Mounted Shot"
@@ -429,7 +429,7 @@ Solid {
   }
 }
 Robot {
-  translation -0.06 -0.24 -6.40302e-05
+  translation -0.06 -0.6 -6.40302e-05
   rotation 0.0007173093479622687 -0.0007177661339461709 -0.9999994851394056 -1.5708
   children [
     Compass {
@@ -459,7 +459,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_LEFT_WHEEL Solid {
-        translation 0 0.0260000000000002 0.02
+        translation 0 0.026000000000000727 0.02
         rotation 0 1 0 0.9552068192627357
         children [
           DEF EPUCK_WHEEL Transform {

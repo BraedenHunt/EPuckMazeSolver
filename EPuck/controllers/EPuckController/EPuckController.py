@@ -8,7 +8,7 @@ from SonicSensors import SonicSensors
 from Mapper import Mapper
 
 MAX_SPEED = 6.28
-MAX_ACCELERATION = 200
+MAX_ACCELERATION = 100000
 TIMESTEP = 64
 
 # create the Robot instance.
@@ -38,7 +38,7 @@ testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, 
 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
 
-rhExplore = [DriveForwardCommand(drivetrain, 0.5), RHExploreCommand(drivetrain, mapper, sonicSensors)]
+rhExplore = [DriveForwardCommand(drivetrain, 1.5), RHExploreCommand(drivetrain, mapper, sonicSensors)]
 commands = rhExplore
 runCommands = True
 index = 0

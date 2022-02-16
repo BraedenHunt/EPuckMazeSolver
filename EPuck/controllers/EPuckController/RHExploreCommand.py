@@ -26,7 +26,7 @@ class RHExploreCommand(Command):
 
     def update(self, time):
         delta_time = time - self.initialTime
-        self.mapper.updateGridWalls(self.drivetrain.odometry.getPose(), self.drivetrain.get_heading(), self.sonicSensors.get_grid())
+        #self.mapper.updateGridWalls(self.drivetrain.odometry.getPose(), self.drivetrain.get_heading(), self.sonicSensors.get_grid())
         if self.currentCommand is None:  # If there isn't a current command
             if not self.commandQueue.empty():  # If the queue isn't empty, the next command is the next queue command
                 self.currentCommand = self.commandQueue.get()

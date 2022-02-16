@@ -4,7 +4,7 @@ from Command import Command
 class FaceHeadingCommand(Command):
     kP = 0.1
     max_speed_prop = .50
-    max_error = 0.075
+    max_error = 0.005
 
     def __init__(self, drivetrain: Drivetrain, heading: float):
         self.drivetrain = drivetrain
