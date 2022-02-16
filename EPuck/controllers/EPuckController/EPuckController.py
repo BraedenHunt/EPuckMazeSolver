@@ -39,11 +39,11 @@ testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, 
 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
 
-rhExplore = [DriveForwardCommand(drivetrain, 1.5), LHExploreCommand(drivetrain, mapper, sonicSensors)]
-commands = rhExplore
+lhExplore = [DriveForwardCommand(drivetrain, 0.5), LHExploreCommand(drivetrain, mapper, sonicSensors)]
+commands = lhExplore
 runCommands = True
 index = 0
-max_index = 10
+max_index = 1
 commands[index].initialize(robot.getTime())
 while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_index:
     if runCommands:
@@ -64,7 +64,7 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
         #print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
     if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
         mapper.prettyPrintMap(mapper.get_grid_pos(drivetrain.odometry.getPose()))
-    print("ps2: {}, ps5: {}".format(sonicSensors.sensors[2].getValue(), sonicSensors.sensors[5].getValue()))
-    print(sonicSensors.printGrid(mapper.translateSensors(drivetrain.get_heading(), sonicSensors.get_grid())))
+    print([sensor.getValue() for sensor in sonicSensors.sensors])
+    #print(sonicSensors.printGrid(mapper.translateSensors(drivetrain.get_heading(), sonicSensors.get_grid())))
 
 
