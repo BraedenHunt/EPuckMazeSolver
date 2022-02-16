@@ -4,6 +4,7 @@ from FaceHeadingCommand import FaceHeadingCommand
 from TurnDegreesCommand import TurnDegressCommand
 from DriveForwardCommand import DriveForwardCommand
 from RHExploreCommand import RHExploreCommand
+from LHExploreCommand import LHExploreCommand
 from SonicSensors import SonicSensors
 from Mapper import Mapper
 
@@ -38,7 +39,7 @@ testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, 
 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
 
-rhExplore = [DriveForwardCommand(drivetrain, 1.5), RHExploreCommand(drivetrain, mapper, sonicSensors)]
+rhExplore = [DriveForwardCommand(drivetrain, 1.5), LHExploreCommand(drivetrain, mapper, sonicSensors)]
 commands = rhExplore
 runCommands = True
 index = 0
