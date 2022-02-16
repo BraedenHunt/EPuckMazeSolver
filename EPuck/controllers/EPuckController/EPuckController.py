@@ -61,8 +61,9 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
             break
         #print('Heading: {}'.format(drivetrain.get_heading()))
         #print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
-        if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
-            mapper.prettyPrintMap(mapper.get_grid_pos(drivetrain.odometry.getPose()))
-    #sonicSensors.printSensorValues()
+    if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
+        mapper.prettyPrintMap(mapper.get_grid_pos(drivetrain.odometry.getPose()))
+    print("ps2: {}, ps5: {}".format(sonicSensors.sensors[2].getValue(), sonicSensors.sensors[5].getValue()))
+    print(sonicSensors.printGrid(mapper.translateSensors(drivetrain.get_heading(), sonicSensors.get_grid())))
 
 

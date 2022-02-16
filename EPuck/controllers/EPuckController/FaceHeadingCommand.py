@@ -21,7 +21,7 @@ class FaceHeadingCommand(Command):
             error = error % 360
         if error > 180:
             error = error % -360
-        print("Heading: {} Target: {} Error: {}".format(self.drivetrain.get_heading(), self.target_heading, error))
+        #print("Heading: {} Target: {} Error: {}".format(self.drivetrain.get_heading(), self.target_heading, error))
         rot = Drivetrain.bound(error * self.kP, -self.max_speed_prop, self.max_speed_prop)
         #print("Rot: {}".format(rot))
         self.drivetrain.drive(-rot, rot)

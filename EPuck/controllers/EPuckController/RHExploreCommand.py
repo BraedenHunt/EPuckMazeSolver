@@ -37,7 +37,7 @@ class RHExploreCommand(Command):
                 adjCoords = self.mapper.getRobotRelativeAdjPoses(self.drivetrain.get_heading(), gridPose)
                 rightCoords = adjCoords[1]
                 forwardCoords = adjCoords[0]
-                if self.mapper.getPosFromPose(rightCoords) == "#" or self.mapper.getPosFromPose(rightCoords) == "+":
+                if self.mapper.getPosFromPose(rightCoords) != "?":# or self.mapper.getPosFromPose(rightCoords) == "+":
                     if self.mapper.getPosFromPose(forwardCoords) != "#":
                         self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
                         print("Driving Forward")

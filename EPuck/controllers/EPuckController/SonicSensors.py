@@ -35,7 +35,7 @@ class SonicSensors:
     @classmethod
     def printGrid(cls, grid):
         print()
-        print("?{}?\n{}-{}\n?{}?".format(cls.printGridHelper(grid[0]), cls.printGridHelper(grid[1]), cls.printGridHelper(grid[3]), cls.printGridHelper(grid[2])))
+        print("?{}?\n{}*{}\n?{}?".format(cls.printGridHelper(grid[0]), cls.printGridHelper(grid[3]), cls.printGridHelper(grid[1]), cls.printGridHelper(grid[2])))
         print()
 
     def printSensorValues(self):

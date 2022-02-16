@@ -32,7 +32,7 @@ class Drivetrain:
         self.left_encoder_offset = 0
         self.right_encoder_offset = 0
 
-        self.odometry = Odometry([-0.06, -0.24])
+        self.odometry = Odometry([-.06, -0.24])
 
         self.compass: Compass = robot.getDevice('compass')
         self.compass.enable(self.timestep)
@@ -48,7 +48,7 @@ class Drivetrain:
         self.right_motor.setVelocity(self.bound(self.rightPower, -1, 1) * self.MAX_SPEED)
         self.odometry.update(self.getLeftDistance(), self.getRightDistance(), self.get_heading())
 
-        #print(self.odometry.getPose())
+        print(self.odometry.getPose())
 
     def get_raw_heading(self):
         values = self.compass.getValues()

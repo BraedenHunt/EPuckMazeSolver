@@ -34,19 +34,25 @@ class Mapper:
         3 - L
         '''
         if abs(heading) < self.max_heading_error: # Facing North
+            #print("facing north")
             return sensorValues # No need to translate
         elif abs(90-heading) < self.max_heading_error: # Facing West
-                    # North         # West          # South          # East
-            return [sensorValues[1], sensorValues[0], sensorValues[3], sensorValues[2]]
+                    # North         # East          # South          # West
+            #print("facing west")
+            return [sensorValues[1], sensorValues[2], sensorValues[3], sensorValues[0]]
         elif abs(-90-heading) < self.max_heading_error: # Facing East
-                    # North         # West          # South          # East
-            return [sensorValues[3], sensorValues[2], sensorValues[1], sensorValues[0]]
+                    # North         # East          # South          # West
+            return [sensorValues[3], sensorValues[0], sensorValues[1], sensorValues[2]]
+            #print("facing east")
+
         elif abs(180-heading) < self.max_heading_error or abs(-180-heading) < self.max_heading_error: # Facing South
-                    # North         # West          # South          # East
-            return [sensorValues[2], sensorValues[1], sensorValues[0], sensorValues[3]]
+            #print("facing south")
+                    # North         # East          # South          # West
+            return [sensorValues[2], sensorValues[3], sensorValues[0], sensorValues[1]]
         else:
             return [False] * 4
     def updateGridWalls(self, pose, heading, sensors):
+        #print("Heading: {}".format(heading))
         translatedSensors = self.translateSensors(heading, sensors)
         gridPose = self.get_grid_pos(pose)
         returnVal = False
