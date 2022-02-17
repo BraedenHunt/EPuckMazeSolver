@@ -8,10 +8,13 @@ class DriveForwardCommand(Command):
     max_speed_prop = 1
     max_error = 0.001
 
-    def __init__(self, drivetrain: Drivetrain, spaces = 1):
+    def __init__(self, drivetrain: Drivetrain, spaces = 1, fast=False):
         self.drivetrain = drivetrain
         self.spaces = spaces
         self.currentPoses = [0, 0]
+        if fast:
+            self.max_error = 0.01
+            self.kP = 200
 
     def update(self, time):
         delta_time = time - self.initial_time

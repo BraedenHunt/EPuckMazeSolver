@@ -430,7 +430,7 @@ Solid {
 }
 Robot {
   translation -0.06 -0.6 -0.000659406
-  rotation -0.00589690399968538 0.006037874392081735 0.9999643846637959 1.5471697458894793
+  rotation -0.00589690399968538 0.006037874392081735 0.9999643846637959 1.57079632679
   children [
     Compass {
     }
@@ -612,7 +612,7 @@ Robot {
         }
       ]
       endPoint DEF EPUCK_RIGHT_WHEEL Solid {
-        translation 0 -0.02599999999999949 0.02
+        translation 0 -0.02600000000000003 0.02
         rotation 0 1 0 4.91756888702974
         children [
           Transform {

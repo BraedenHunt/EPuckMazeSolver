@@ -43,10 +43,10 @@ widePath = [DriveForwardCommand(drivetrain, 2.5), FaceHeadingCommand(drivetrain,
             FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 8), FaceHeadingCommand(drivetrain, -90),
             DriveForwardCommand(drivetrain, 2)]
 
-shortPath = [DriveForwardCommand(drivetrain, 7.5), FaceHeadingCommand(drivetrain, 90),
-             DriveForwardCommand(drivetrain, 2),
-             FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 3),
-             FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2)]
+shortPath = [DriveForwardCommand(drivetrain, 7.5, fast=True), FaceHeadingCommand(drivetrain, 90, fast=True),
+             DriveForwardCommand(drivetrain, 2, fast=True),
+             FaceHeadingCommand(drivetrain, 0, fast=True), DriveForwardCommand(drivetrain, 3, fast=True),
+             FaceHeadingCommand(drivetrain, 90, fast=True), DriveForwardCommand(drivetrain, 2, fast=True)]
 
 testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90),
              TurnDegressCommand(drivetrain, 180)]

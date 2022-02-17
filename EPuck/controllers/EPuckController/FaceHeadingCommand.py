@@ -6,14 +6,17 @@ class FaceHeadingCommand(Command):
     max_speed_prop = .50
     max_error = 0.005
 
-    def __init__(self, drivetrain: Drivetrain, heading: float):
+    def __init__(self, drivetrain: Drivetrain, heading: float, fast=False):
         self.drivetrain = drivetrain
         if heading > 180:
             heading = heading % -180
         elif heading < -180:
             heading = heading % 180
         self.target_heading = heading
-        print("turning to {}".format(heading))
+        #print("turning to {}".format(heading))
+        if fast:
+            self.kP = 0.1
+            self.max_error = .1
 
     def update(self, time):
         error = (self.target_heading - self.drivetrain.get_heading())
