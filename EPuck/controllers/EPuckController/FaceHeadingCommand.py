@@ -15,7 +15,7 @@ class FaceHeadingCommand(Command):
         self.target_heading = heading
         #print("turning to {}".format(heading))
         if fast:
-            self.kP = 0.05
+            self.kP = 0.06
             self.max_error = .15
 
     def update(self, time):
