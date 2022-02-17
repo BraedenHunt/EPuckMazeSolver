@@ -13,8 +13,8 @@ class DriveForwardCommand(Command):
         self.spaces = spaces
         self.currentPoses = [0, 0]
         if fast:
-            self.max_error = 0.01
-            self.kP = 200
+            self.max_error = 0.02
+            self.kP = 75
 
     def update(self, time):
         delta_time = time - self.initial_time
