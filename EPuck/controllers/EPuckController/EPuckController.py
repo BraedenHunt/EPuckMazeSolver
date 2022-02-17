@@ -82,14 +82,15 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
                 commands[index].initialize(robot.getTime())
 
         if touchSensor.getValue() > 0:
-            print("TOUCHED!")
+            mapper.setTrophy(drivetrain.odometry.getPose())
+            print("WIN!")
             break
     if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
-        mapper.prettyPrintMap(mapper.get_grid_pos(drivetrain.odometry.getPose()))
-    print("Heading {}".format(drivetrain.get_heading()))
+        mapper.prettyPrintMap()
+    #print("Heading {}".format(drivetrain.get_heading()))
     # print([sensor.getValue() for sensor in sonicSensors.sensors])
-
-data['run'] += 1
-data['maze'] = mapper.map
-with open("data.json", 'w') as file:
-    json.dump(data, file)
+if data['run'] != 3:
+    data['run'] += 1
+    data['maze'] = mapper.map
+    with open("data.json", 'w') as file:
+        json.dump(data, file)

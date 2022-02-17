@@ -123,3 +123,8 @@ class Mapper:
         elif abs(180 - heading) < self.max_heading_error or abs(
                 -180 - heading) < self.max_heading_error:  # Facing South
             return [[x, y + 1], [x - 1, y], [x, y - 1], [x + 1, y]]
+
+
+    def setTrophy(self, robotPose):
+        gridPose = self.get_grid_pos(robotPose)
+        self.map[gridPose[1]][gridPose[0]] = '@'

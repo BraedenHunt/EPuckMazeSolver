@@ -40,7 +40,7 @@ class LHExploreCommand(Command):
                 leftSpace = self.mapper.getPosFromPose(adjCoords[3])
 
                 if leftSpace == '?':
-                    print("Turning left: {} heading".format(90 * round((self.drivetrain.get_heading() + 90) / 90)))
+                    #print("Turning left: {} heading".format(90 * round((self.drivetrain.get_heading() + 90) / 90)))
                     # turn left to the next cardinal direction.
                     self.currentCommand = FaceHeadingCommand(self.drivetrain,
                                                              90 * round((self.drivetrain.get_heading() + 90) / 90))
@@ -53,7 +53,7 @@ class LHExploreCommand(Command):
                                                                          (self.drivetrain.get_heading() + 90) / 90))
                             self.commandQueue.put(DriveForwardCommand(self.drivetrain, 1))
                         else:
-                            print("Turning right")
+                            #print("Turning right")
                             self.currentCommand = FaceHeadingCommand(self.drivetrain,
                                                                      90 * round((self.drivetrain.get_heading() - 90) / 90))
                     elif forwardSpace == '+' and leftSpace == '+':
@@ -69,7 +69,7 @@ class LHExploreCommand(Command):
                                                                          (self.drivetrain.get_heading() + 90) / 90))
                         else:
                             self.currentCommand = DriveForwardCommand(self.drivetrain, 1)
-                            print("Driving Forward")
+                            #print("Driving Forward")
 
         if not self.currentCommand.initialized:
             self.currentCommand.initialize(time)
