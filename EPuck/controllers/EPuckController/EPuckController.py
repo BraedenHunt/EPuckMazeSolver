@@ -7,10 +7,18 @@ from RHExploreCommand import RHExploreCommand
 from LHExploreCommand import LHExploreCommand
 from SonicSensors import SonicSensors
 from Mapper import Mapper
+import json
 
 MAX_SPEED = 6.28
-MAX_ACCELERATION = 100000
+MAX_ACCELERATION = 10
 TIMESTEP = 64
+
+data = {"run": 1}
+try:
+    with open("data.json") as file:
+        data = json.load(file)
+except OSError:
+    print("File not found, running Run 1")
 
 # create the Robot instance.
 robot = Robot()
@@ -26,25 +34,40 @@ sonicSensors = SonicSensors(robot)
 drivetrain.drive(0.0, 0.0)
 
 mapper = Mapper(12, 12, .12)
+if 'maze' in data:
+    mapper.map = data['maze']
 
 robot.step(TIMESTEP)
-widePath = [DriveForwardCommand(drivetrain, 2.5), FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 5),
+widePath = [DriveForwardCommand(drivetrain, 2.5), FaceHeadingCommand(drivetrain, 90),
+            DriveForwardCommand(drivetrain, 5),
             FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 8), FaceHeadingCommand(drivetrain, -90),
             DriveForwardCommand(drivetrain, 2)]
 
-shortPath = [DriveForwardCommand(drivetrain, 7.5), TurnDegressCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2),
-            TurnDegressCommand(drivetrain, -90), DriveForwardCommand(drivetrain, 3), TurnDegressCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2)]
+shortPath = [DriveForwardCommand(drivetrain, 7.5), FaceHeadingCommand(drivetrain, 90),
+             DriveForwardCommand(drivetrain, 2),
+             FaceHeadingCommand(drivetrain, 0), DriveForwardCommand(drivetrain, 3),
+             FaceHeadingCommand(drivetrain, 90), DriveForwardCommand(drivetrain, 2)]
 
-testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90), TurnDegressCommand(drivetrain, 180)]
+testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90),
+             TurnDegressCommand(drivetrain, 180)]
 
 testTurns2 = [FaceHeadingCommand(drivetrain, 180)]
 
 lhExplore = [DriveForwardCommand(drivetrain, 0.5), LHExploreCommand(drivetrain, mapper, sonicSensors)]
 rhExplore = [DriveForwardCommand(drivetrain, 0.5), RHExploreCommand(drivetrain, mapper, sonicSensors)]
-commands = lhExplore
+
+if data['run'] == 1:
+    commands = rhExplore
+elif data['run'] == 2:
+    commands = lhExplore
+else:
+    commands = shortPath
+
+#commands = testTurns
+
 runCommands = True
 index = 0
-max_index = 1
+max_index = 100000
 commands[index].initialize(robot.getTime())
 while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_index:
     if runCommands:
@@ -61,11 +84,12 @@ while robot.step(TIMESTEP) != -1 and index < len(commands) and index <= max_inde
         if touchSensor.getValue() > 0:
             print("TOUCHED!")
             break
-        #print('Heading: {}'.format(drivetrain.get_heading()))
-        #print("right sensor: {}".format(sonicSensors.sensors[2].getValue()))
     if mapper.updateGridWalls(drivetrain.odometry.getPose(), drivetrain.get_heading(), sonicSensors.get_grid()):
         mapper.prettyPrintMap(mapper.get_grid_pos(drivetrain.odometry.getPose()))
-    print([sensor.getValue() for sensor in sonicSensors.sensors])
-    #print(sonicSensors.printGrid(mapper.translateSensors(drivetrain.get_heading(), sonicSensors.get_grid())))
+    print("Heading {}".format(drivetrain.get_heading()))
+    # print([sensor.getValue() for sensor in sonicSensors.sensors])
 
-
+data['run'] += 1
+data['maze'] = mapper.map
+with open("data.json", 'w') as file:
+    json.dump(data, file)

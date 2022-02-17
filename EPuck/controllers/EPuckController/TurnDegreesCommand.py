@@ -6,7 +6,7 @@ class TurnDegressCommand(Command):
     kP = 0.12
     kD = 0.06
     max_speed_prop = 1
-    max_error = 0.075
+    max_error = 0.025
     maxOmega = 120
     maxAlpha = 450
 
@@ -33,6 +33,7 @@ class TurnDegressCommand(Command):
         self.initialTime = time
         self.initialized = True
         self.drivetrain.resetGyro()
+        self.drivetrain.zero_encoders()
         self.profile = TrapezoidalMotionProfile(self.getCurrentAngle(), self.target_heading, self.maxOmega, self.maxAlpha)
 
     def getCurrentAngle(self):
