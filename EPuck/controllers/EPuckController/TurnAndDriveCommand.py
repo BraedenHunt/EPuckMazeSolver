@@ -7,9 +7,9 @@ from TrapezoidalMotionProfile import TrapezoidalMotionProfile
 class TurnAndDriveCommand(Command):
     MAZE_GRID = 0.12 # meters
 
-    kP = 35
+    kP = 45
     max_speed_prop = .83
-    max_error = 0.010
+    max_error = 0.015
 
     def __init__(self, drivetrain: Drivetrain, right = True):
         self.drivetrain = drivetrain
