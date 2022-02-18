@@ -3,6 +3,7 @@ from Drivetrain import Drivetrain
 from FaceHeadingCommand import FaceHeadingCommand
 from TurnDegreesCommand import TurnDegressCommand
 from DriveForwardCommand import DriveForwardCommand
+from TurnAndDriveCommand import TurnAndDriveCommand
 from RHExploreCommand import RHExploreCommand
 from LHExploreCommand import LHExploreCommand
 from SonicSensors import SonicSensors
@@ -50,6 +51,11 @@ def main():
                  FaceHeadingCommand(drivetrain, 0, fast=True), DriveForwardCommand(drivetrain, 3, fast=True),
                  FaceHeadingCommand(drivetrain, 90, fast=True), DriveForwardCommand(drivetrain, 2, fast=True)]
 
+    shortPathTightTurns = [DriveForwardCommand(drivetrain, 7, fast=True), TurnAndDriveCommand(drivetrain, right=False),
+                 DriveForwardCommand(drivetrain, 1, fast=True),
+                 TurnAndDriveCommand(drivetrain, right=True), DriveForwardCommand(drivetrain, 2, fast=True),
+                 TurnAndDriveCommand(drivetrain, right=False), DriveForwardCommand(drivetrain, 2.5, fast=True)]
+
     testTurns = [TurnDegressCommand(drivetrain, 90), TurnDegressCommand(drivetrain, -90),
                  TurnDegressCommand(drivetrain, 180)]
 
@@ -64,6 +70,8 @@ def main():
         commands = lhExplore
     else:
         commands = generatePathFromMaze(data['maze'], drivetrain)
+
+    commands = shortPathTightTurns
 
     runCommands = True
     index = 0

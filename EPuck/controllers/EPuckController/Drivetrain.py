@@ -6,6 +6,7 @@ from Odometry import Odometry
 
 class Drivetrain:
     WHEEL_DIAMETER = 0.041 * 0.97947900595 # meters (~41mm)
+    TRACK_WIDTH = 0.055
 
     def __init__(self, robot: Robot, max_speed, max_accel, timestep = 64):
         self.leftPower = 0
