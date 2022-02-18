@@ -71,7 +71,7 @@ def main():
     else:
         commands = generatePathFromMaze(data['maze'], drivetrain)
 
-    commands = shortPathTightTurns
+    #commands = shortPathTightTurns
 
     runCommands = True
     index = 0
@@ -108,14 +108,24 @@ def generatePathFromMaze(maze, drivetrain):
     directions = mazeReader.GiveDirections(maze)
     print(directions)
     headings = {"left": 90, "up": 0, "down": 180, "right": -90}
-    commands = [DriveForwardCommand(drivetrain, directions[0][1] + 0.5, fast=True)]
+    commands = [DriveForwardCommand(drivetrain, directions[0][1], fast=True)]
     for i in range(1, len(directions)-1):
-        commands.append(FaceHeadingCommand(drivetrain, headings[directions[i][0]], fast=True))
-        commands.append(DriveForwardCommand(drivetrain, directions[i][1], fast=True))
-    commands.append(FaceHeadingCommand(drivetrain, headings[directions[-1][0]], fast=True))
-    commands.append(DriveForwardCommand(drivetrain, directions[i][1]+2, fast=True))
+        commands.append(TurnAndDriveCommand(drivetrain, right=isRight(directions[i-1][0], directions[i][0])))
+        commands.append(DriveForwardCommand(drivetrain, directions[i][1]-1, fast=True))
+    commands.append(TurnAndDriveCommand(drivetrain, right=isRight(directions[-2][0], directions[-1][0])))
+    commands.append(DriveForwardCommand(drivetrain, directions[-1][1]+2, fast=True))
     return commands
 
+def isRight(prevDir, dir):
+    if prevDir == 'left' and dir == 'up':
+        return True
+    if prevDir == 'up' and dir == 'right':
+        return True
+    if prevDir == 'right' and dir == 'down':
+        return True
+    if prevDir == 'down' and dir == 'left':
+        return True
+    return False
 
 if __name__ == "__main__":
     main()
