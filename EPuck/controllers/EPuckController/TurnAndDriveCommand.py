@@ -9,7 +9,7 @@ class TurnAndDriveCommand(Command):
 
     kP = 45
     max_speed_prop = .83
-    max_error = 0.015
+    max_error = 0.02
 
     def __init__(self, drivetrain: Drivetrain, right = True):
         self.drivetrain = drivetrain
